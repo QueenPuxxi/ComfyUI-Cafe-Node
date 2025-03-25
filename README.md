@@ -1,4 +1,4 @@
-# cafe-test-node
+# ComfyUI-Cafe-Node
 ## 参考蒙版扩展和蒙版相减节点制作
 目前只有一个节点：自定义蒙版外框
 节点参数：

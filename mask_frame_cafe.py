@@ -63,7 +63,7 @@ class maskframecafe:
     RETURN_TYPES = ("MASK",)
     RETURN_NAMES = ("mask",)
     FUNCTION = "expand_mask"
-    CATEGORY = "☕️不妨请咖啡哥来一杯拿铁☕️"
+    CATEGORY = "图像处理☕️"
     DESCRIPTION = """
 ☕️把扩展的像素与原蒙版作差值，得到外边缘框
 参数中英对照：
