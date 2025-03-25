@@ -1,6 +1,13 @@
 # ComfyUI-Cafe-Node
-## 参考蒙版扩展和蒙版相减节点制作
-目前只有一个节点：自定义蒙版外框
+# RGBA转为RGB☕️
+## ！！！强烈建议搭配ComfyUI-Light-Tool的加载图像节点一起使用，官方的加载图像节点不适用！！！
+https://github.com/ihmily/ComfyUI-Light-Tool
+
+## 效果预览
+![image](https://github.com/user-attachments/assets/fc68daf8-fb4a-49d2-87b2-1958f747d6e0)
+
+
+# 自定义蒙版外框☕️
 节点参数：
 - expand: 扩展像素数
 - incremental_expandrate: 扩展像素增量
@@ -10,7 +17,6 @@
 - lerp_alpha: 蒙版插值因子
 - decay_factor: 蒙版衰减因子
 - fill_holes: 是否填充内部空洞
-
 ![image](https://github.com/user-attachments/assets/b184f317-7a2f-4703-b6f0-014bc83980c9)
 
 ## 效果预览
