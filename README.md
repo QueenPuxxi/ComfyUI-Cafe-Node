@@ -1,11 +1,9 @@
 # ComfyUI-Cafe-Node
 # RGBA转为RGB☕️
-## ！！！强烈建议搭配ComfyUI-Light-Tool的加载图像节点一起使用，官方的加载图像节点不适用！！！
-https://github.com/ihmily/ComfyUI-Light-Tool
+## ！！！强烈建议搭配[ComfyUI-Light-Tool](https://github.com/ihmily/ComfyUI-Light-Tool)的加载图像节点一起使用，官方的加载图像节点不适用！！！
 
 ## 效果预览
 ![image](https://github.com/user-attachments/assets/fc68daf8-fb4a-49d2-87b2-1958f747d6e0)
-
 
 # 自定义蒙版外框☕️
 节点参数：
@@ -24,3 +22,13 @@ https://github.com/ihmily/ComfyUI-Light-Tool
 
 ## 示例工作流
 ![示例](https://github.com/user-attachments/assets/4022a595-407d-4b4d-8b0a-10065a822018)
+
+# 安装
+请确保您已经安装了[ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+'''
+cd custom_nodes
+git clone https://github.com/QueenPuxxi/ComfyUI-Cafe-Node.git
+cd ComfyUI-Cafe-Node
+pip install -r requirements.txt
+'''
+安装完成后，需要重启ComfyUI才能使用该节点
