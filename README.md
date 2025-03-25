@@ -15,6 +15,7 @@
 - lerp_alpha: 蒙版插值因子
 - decay_factor: 蒙版衰减因子
 - fill_holes: 是否填充内部空洞
+
 ![image](https://github.com/user-attachments/assets/b184f317-7a2f-4703-b6f0-014bc83980c9)
 
 ## 效果预览
