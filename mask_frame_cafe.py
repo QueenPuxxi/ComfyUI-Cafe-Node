@@ -137,9 +137,3 @@ class maskframecafe:
         mask = subtract_masks(mask2, mask1)
 
         return (mask,)
-
-# A dictionary that contains all nodes you want to export with their names
-# NOTE: names should be globally unique
-NODE_CLASS_MAPPINGS = {
-    "自定义蒙版外框": maskframecafe
-}
