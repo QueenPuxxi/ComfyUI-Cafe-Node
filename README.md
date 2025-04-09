@@ -1,4 +1,28 @@
 # ComfyUI-Cafe-Node
+# 从路径依次加载图片☕️
+批处理的数字即为执行次数
+![image](https://github.com/user-attachments/assets/ca91dd64-29cf-46f7-b067-e5f40fb998b5)
+
+例如：在“D:\Download\输入图片\JV图案分类汇总\植物花卉”文件夹中有如下图片：
+```
+植物花卉1.png
+植物花卉10.png
+植物花卉2.png
+植物花卉3.png
+植物花卉4.png
+植物花卉5.png
+植物花卉6.png
+植物花卉7.png
+植物花卉8.png
+植物花卉9.png
+```
+那么设定批处理数量为10，即可遍历完所有图片；设定批处理数量为5，只会遍历到“植物花卉4.png”，下次再执行就会从“植物花卉5.png”开始
+
+# 获取图片名称☕️
+能获取图片路径中的图片名称（不包含后缀名）
+搭配“从路径依次加载图片☕️”节点和[WAS插件](https://github.com/WASasquatch/was-node-suite-comfyui)的“Image Save”节点，可做到从保存图片文件名前缀即可区分由什么输入图生成，便于批量生成后的分析
+![image](https://github.com/user-attachments/assets/cb40f6e4-c5de-4b42-9b4d-ebf7dd0def49)
+
 # RGBA转为RGB☕️
 ## ！！！强烈建议搭配[ComfyUI-Light-Tool](https://github.com/ihmily/ComfyUI-Light-Tool)的加载图像节点一起使用，官方的加载图像节点不适用！！！
 
