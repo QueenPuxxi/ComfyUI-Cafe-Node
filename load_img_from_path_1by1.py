@@ -54,63 +54,6 @@ class load_images_from_the_path_one_by_one:
                 print(f"创建 JSON 文件时出错: {e}")
                 self.data = None  # 在错误情况下，将 data 设为 None
 
-    def reset(self):
-        """
-        Resets the directory and JSON file tracking.
-        """
-        # Remove history JSON file
-        if os.path.exists(self.history_json_path):
-            os.remove(self.history_json_path)
-            print(f"{self.history_json_path} has been deleted.")
-
-        # Clear the txt-dir directory
-        if os.path.exists(TXT_DIR):
-            for filename in os.listdir(TXT_DIR):
-                file_path = os.path.join(TXT_DIR, filename)
-                try:
-                    if os.path.isfile(file_path) or os.path.islink(file_path):
-                        os.unlink(file_path)
-                        print(f"Deleted {file_path}")
-                    elif os.path.isdir(file_path):
-                        shutil.rmtree(file_path)
-                        print(f"Deleted {file_path}")
-                except Exception as e:
-                    print(f"Failed to delete {file_path}. Reason: {e}")
-
-        self.history_json_path = WD_HISTORY_PATH
-        self.data = None
-        self.store_index = 0
-        self.txt_name = None
-
-        # Ensure txt-dir exists
-        if not os.path.exists(TXT_DIR):
-            os.makedirs(TXT_DIR)
-
-        #json not exists code
-        if not os.path.exists(self.history_json_path):
-            pass
-
-        # load history json
-        if os.path.exists(self.history_json_path):
-            try:
-                with open(self.history_json_path, 'r', encoding='utf-8') as file:
-                    self.data = json.load(file)
-                print(f"成功加载 JSON 文件: {self.history_json_path}")
-            except json.JSONDecodeError:
-                print(f"错误: 文件 {self.history_json_path} 不是有效的 JSON 格式。")
-            except Exception as e:
-                print(f"加载 JSON 文件时出错: {e}")
-        else:
-            print(f"文件路径 {self.history_json_path} 不存在，正在创建一个新的空 JSON 文件...")
-            try:
-                self.data = {}  # 初始化为空字典
-                with open(self.history_json_path, 'w', encoding='utf-8') as file:
-                    json.dump(self.data, file, indent=4)
-                print(f"成功创建空的 JSON 文件: {self.history_json_path}")
-            except Exception as e:
-                print(f"创建 JSON 文件时出错: {e}")
-                self.data = None  # 在错误情况下，将 data 设为 None
-
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -118,9 +61,8 @@ class load_images_from_the_path_one_by_one:
                 "image_dir_path": ("STRING", {"default": ''}),
                 "mode": (["automatic", "index"],),
                 "index": ("INT", {"default": 0, "min": 0, "step": 1}),
-                "reset": (["disable", "enable"],)
-            }
-    }
+            },
+        }
 
     @classmethod
     def IS_CHANGED(cls, **kwargs):
@@ -132,9 +74,7 @@ class load_images_from_the_path_one_by_one:
 
     CATEGORY = "输入Input☕️"
 
-    def start(self, image_dir_path='', mode='automatic', index=0, reset='disable'):
-        if reset == 'enable':
-            self.reset()
+    def start(self, image_dir_path='', mode='automatic', index=0):
         image_dir_path = self.normalize_path(image_dir_path)
         self.store_index = index
         #PARTA 初始化和校验image list 相关信息
