@@ -1,4 +1,11 @@
 # ComfyUI-Cafe-Node
+# Pixian RMBG☕️
+调用Pixian的API实现抠图
+
+![image](https://github.com/user-attachments/assets/5e6e4edf-a03f-4f34-9243-81119aa52c2e)
+![image](https://github.com/user-attachments/assets/dd5f73d4-7b2c-484c-93fa-d251efc7608f)
+
+
 # 从路径依次加载图片☕️
 批处理的数字即为执行次数
 
