@@ -50,7 +50,8 @@ class PixianRMBG:
         response = requests.post(
             'https://api.pixian.ai/api/v2/remove-background',
             files={'image': buf},
-            auth=(api_key, api_secret)
+            auth=(api_key, api_secret),
+            timeout=10  # 设置超时时间为 10 秒
         )
 
         if response.status_code != 200:
