@@ -48,7 +48,7 @@ class PixianRMBG:
 
         # 调用 pixian_rmbg 抠图接口
         response = requests.post(
-            'https://api.pixian_rmbg.ai/api/v2/remove-background',
+            'https://api.pixian.ai/api/v2/remove-background',
             files={'image': buf},
             auth=(api_key, api_secret)
         )
