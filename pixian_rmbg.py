@@ -3,6 +3,8 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 class PixianRMBG:
     @classmethod
@@ -16,10 +18,10 @@ class PixianRMBG:
         }
 
     RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "pixian_rmbg"
+    FUNCTION = "pixian"
     CATEGORY = "图像处理☕️"
 
-    def pixian_rmbg(self, image, api_key, api_secret):
+    def pixian(self, image, api_key, api_secret):
         print("📥 原始输入 image:")
         print("  type:", type(image))
         print("  shape:", image.shape)
@@ -46,16 +48,28 @@ class PixianRMBG:
         pil_input.save(buf, format='PNG')
         buf.seek(0)
 
-        # 调用 pixian_rmbg 抠图接口
-        response = requests.post(
-            'https://api.pixian.ai/api/v2/remove-background',
-            files={'image': buf},
-            auth=(api_key, api_secret),
-            timeout=10  # 设置超时时间为 10 秒
+        # 配置 requests Session 带重试机制
+        session = requests.Session()
+        retries = Retry(
+            total=5,
+            backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["POST"]
         )
+        session.mount("https://", HTTPAdapter(max_retries=retries))
+
+        try:
+            response = session.post(
+                'https://api.pixian.ai/api/v2/remove-background',
+                files={'image': buf},
+                auth=(api_key, api_secret),
+                timeout=30
+            )
+        except requests.RequestException as e:
+            raise Exception(f"Pixian 请求失败（网络错误）: {e}")
 
         if response.status_code != 200:
-            raise Exception(f"pixian_rmbg API 请求失败: {response.status_code} - {response.text}")
+            raise Exception(f"Pixian API 请求失败: {response.status_code} - {response.text}")
 
         # 返回的是 RGBA 图像
         result_img = Image.open(BytesIO(response.content)).convert("RGBA")
