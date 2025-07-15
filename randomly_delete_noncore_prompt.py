@@ -22,13 +22,11 @@ class RandomlyDeleteNoncorePrompt:
     CATEGORY = "提示词处理☕️"
 
     def filter_elements(self, input_text, core_element, separator, seed):
-        # 设置随机种子
         if seed != -1:
             random.seed(seed)
         else:
             random.seed()
 
-        # 🔧 将输入和核心词都按分隔符拆分为列表
         elements = [e.strip() for e in input_text.split(separator) if e.strip()]
         core_elements = [e.strip() for e in core_element.split(separator) if e.strip()]
         
@@ -36,11 +34,21 @@ class RandomlyDeleteNoncorePrompt:
         deleted = []
 
         remaining = [e for e in elements if e not in core_elements]
+        temp_kept = []
+
         for item in remaining:
             if random.choice([True, False]):
-                kept.append(item)
+                temp_kept.append(item)
             else:
                 deleted.append(item)
+
+        # ✅ 强制至少删除一个非核心元素
+        if not deleted and temp_kept:
+            force_delete = random.choice(temp_kept)
+            temp_kept.remove(force_delete)
+            deleted.append(force_delete)
+
+        kept += temp_kept
 
         return (
             separator.join(kept),
