@@ -52,6 +52,7 @@ def log_node_info(node_name, message=None):
 
 def log_node_warn(node_name, message=None):
     _log_node(COLORS_FG["YELLOW"], node_name, message)
+
 # =======================================================================
 
 class CafeSaveText:
@@ -76,8 +77,8 @@ class CafeSaveText:
             }
         }
 
-    RETURN_TYPES = ("STRING", "IMAGE")
-    RETURN_NAMES = ("text", "image")
+    RETURN_TYPES = ("STRING", "IMAGE", "STRING")  # 新增 output path 输出
+    RETURN_NAMES = ("text", "image", "output_path")  # 新增 output path 输出
     FUNCTION = "save_text"
     OUTPUT_NODE = True
     CATEGORY = "保存输出☕️"
@@ -160,6 +161,10 @@ class CafeSaveText:
 
         result = {"result": (text, None)}
 
+        # 加入文件路径输出
+        output_path = filepath_print  # 将文件路径作为新的输出
+        result['result'] = (text, None, output_path)
+
         if image is not None:
             image_prefix = os.path.splitext(numbered_file)[0]
             imagepath = os.path.join(output_file_path, image_prefix)
@@ -176,6 +181,6 @@ class CafeSaveText:
                             number_padding=number_padding, output_path=output_path)
 
             log_node_info("Save Text", f"Saving Image to {imagepath}")
-            result['result'] = (text, image)
+            result['result'] = (text, image, output_path)  # 将路径也加到结果中
 
         return result
