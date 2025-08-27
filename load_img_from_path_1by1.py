@@ -233,6 +233,12 @@ class load_images_from_the_path_one_by_one:
                 i = i.point(lambda i: i * (1 / 255))
             image = i.convert("RGB")
 
+            has_alpha = "A" in i.getbands()
+            if has_alpha:
+                image = i.convert("RGBA")
+            if i.mode == 'P' and 'transparency' in i.info:
+                image = i.convert("RGBA")
+
             if len(output_images) == 0:
                 w = image.size[0]
                 h = image.size[1]
@@ -245,14 +251,20 @@ class load_images_from_the_path_one_by_one:
             if 'A' in i.getbands():
                 mask = np.array(i.getchannel('A')).astype(np.float32) / 255.0
                 mask = 1. - torch.from_numpy(mask)
+            elif i.mode == 'P' and 'transparency' in i.info:
+                mask = np.array(i.convert('RGBA').getchannel('A')).astype(np.float32) / 255.0
+                mask = 1. - torch.from_numpy(mask)
             else:
                 mask = torch.zeros((64, 64), dtype=torch.float32, device="cpu")
             output_images.append(image)
+            output_masks.append(mask.unsqueeze(0))
 
         if len(output_images) > 1 and img.format not in excluded_formats:
             output_image = torch.cat(output_images, dim=0)
+            output_mask = torch.cat(output_masks, dim=0)
         else:
             output_image = output_images[0]
+            output_mask = output_masks[0]
 
         return output_image
 
